@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require("express");
+const bodyParser = require('body-parser');
 const cors = require('cors');
 const api = require("./api");
 const errorHandlers = require("./handlers/errorHandlers");
@@ -16,6 +17,9 @@ const logger = morgan('combined', {
 const whitelist = [""]
 
 app.use(logger);
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/api", api);
 
