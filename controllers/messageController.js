@@ -1,11 +1,21 @@
 const { send } = require("../handlers/mail");
 
 exports.sendMessage = async (req, res) => {
+  let data = null;
+
   const options = Object.assign({}, req.body, {
-    filename: 'message-recieved',
-    subject: 'Someone sent you a message!',
-    user: { email: "kungfu.keari@gmail.com" }
+    filename: "message-recieved",
+    subject: "Message recieved at kearieggers.com",
+    from: {
+      email: "mailbot@mail.kearieggers.com",
+      name: "mailbot @ kearieggers.com"
+    },
+    to: "kungfu.keari@gmail.com"
   });
-  const message = await send(options);
-  res.json(message);
+  const response = await send(options);
+
+  if (response.data) data = response.data;
+  else data = response;
+
+  res.json(data);
 };
