@@ -5,12 +5,12 @@ exports.sendMessage = async (req, res) => {
 
   const options = Object.assign({}, req.body, {
     filename: "message-recieved",
-    subject: "Message recieved at kearieggers.com",
+    subject: `Message recieved at ${process.env.DOMAIN}`,
     from: {
-      email: "mailbot@mail.kearieggers.com",
-      name: "mailbot @ kearieggers.com"
+      email: process.env.MAIL_FROM_EMAIL,
+      name: process.env.MAIL_FROM_NAME
     },
-    to: "kungfu.keari@gmail.com"
+    to: process.env.MAIL_TO_EMAIL
   });
   const response = await send(options);
 
